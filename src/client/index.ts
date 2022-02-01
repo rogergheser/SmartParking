@@ -23,6 +23,10 @@ document.querySelector("#menu-button").addEventListener("click", (e) => {
     verticalMenu.classList.add("visible");
     e.stopPropagation();
 });
+document.querySelector("#menu-button2").addEventListener("click", (e) => {
+    verticalMenu.classList.add("visible");
+    e.stopPropagation();
+});
 
 verticalMenu.addEventListener("click", (e) => {
     e.stopPropagation();

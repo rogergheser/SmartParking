@@ -244,6 +244,7 @@ body {
     align-items: flex-end;
     align-content: space-between;
 }
+
 .plus-button {
     width: 97.5%;
     border: none;
@@ -290,7 +291,7 @@ body {
     transform: translateX(-100%);
     transition: transform 700ms ease-in-out;
     pointer-events: none;
-
+    z-index: 999;
     #utente{
         background-color: darkblue;
         padding-top: 1px;
@@ -320,5 +321,25 @@ body {
         transform: translateX(0%);
         transition:transform 500ms ease-in-out;
         pointer-events: all;
+    }
+}
+
+//---------------------------------------------------------------------
+// PROFILO PERSONALE
+#profilo{
+    input {
+
+    }
+    h1{
+        display: block;
+        background-color: skyblue;
+        font-size: 20px;
+    }
+    h2{
+        color: rgb(4, 148, 196);
+        font-size: 10px;
+    }
+    p{
+
     }
 }

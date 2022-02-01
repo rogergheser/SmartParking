@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="login-header">
+        <h1>BENVENUTI IN <br><span id="title-span"><b><i>Smart Parking</i></b></span></h1>
+    </div>
+    <div id="login" class="main-screen">
+        <form id="login-form">
+            <input type="text" name="email" id="email-field" class="login-form-field" placeholder="email">
+            <input type="text" name="password" id="password-field" class="login-form-field" placeholder="password">
+            <input type="submit" value="Accedi" id="login-form-submit">
+        </form>
+        <div id="SSO">
+            <!-- <img src=<%=require("./../icons/facebook.png")%>>
+            <img src=<%=require("./../icons/google.jpg")%>>
+            <img src=<%=require("./../icons/apple.jpg")%>> -->
+        </div>
+        <div id="link-registrazione">
+            <p><a href="">Registrati come utente</a></p>
+            <p><a>Registrati come parcheggiatore</a></p>
+        </div>
+    </div>
+    <div id="registrazione" class="main-screen">
+        <div id="subtitle">
+            <p>Tutti i campi sono obbligatori</p>
+        </div>
+        <form id="registration-form">
+            <input type="text" name="nome" id="name-field" class="registration-form-field" placeholder="nome">
+            <input type="text" name="cognome" id="cognome-field" class="registration-form-field" placeholder="cognome">
+            <input type="number" name="cellulare" id="phone-field" class="registration-form-field" placeholder="cellulare">
+            <input type="text" name="email" id="email-field" class="registration-form-field" placeholder="email">
+            <input type="text" name="password" id="password-field" class="registration-form-field" placeholder="password">
+            <input type="text" name="password-confirmation" id="password-confirmation-field" class="registration-form-field" placeholder="password">
+            <input type="text" name="cf" id="cf-field" class="registration-form-field" placeholder="codice fiscale">
+            <div id="registration-data-field-container">
+                <label for="registration-data-field">data di nascita</label>
+                <input type="date" name="data" id="registration-data-field" class="date-form-field" placeholder="data di nascita">
+            </div>
+            <input type="submit" value="Accedi" id="registration-form-submit">
+        </form>
+    </div>
+    <div id="first-login" class="main-screen">
+        <h1>Inserire una targa ed una carta di credito</h1>
+        <form id="first-login-form">
+            <p>targhe</p>
+            <input type="text" name="targa" id="targa-field" class="registration-form-field" placeholder="targa">
+            <input type="submit" value="+" id="targa-plus-button" class="plus-button">
+            <p>carte</p>
+            <input type="text" name="numero-carta" id="numero-carta-field" class="registration-form-field" placeholder="numero carta">
+            <div id="first-login-data-field-container">
+                <label for="first-login-data-field">data di scadenza</label>
+                <input type="date" name="data" id="first-login-data-field" class="date-form-field" placeholder="data di scadenza">
+            </div>
+            <input type="number" name="cvv" id="cvv-field" class="registration-form-field" placeholder="CVV">
+            <input type="submit" value="+" id="targa-plus-button" class="plus-button">
+            <input type="submit" value="invia" id="registration-form-submit">
+        </form>
+    </div>
+
+    <div id="home" class="main-screen">
+        <div id="navbar">
+            <image id="menu-button" src=<%=require("../icons/menu.png")%> width="25px" height="25px">
+            <input type="text" height="25px" id="cerca-field" class=registration-form-field placeholder="Cerca">
+        </div>
+        <iframe id="mappa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2768.285472302945!2d11.115294079686622!3d46.06534870125283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4782714c0425c8a1%3A0xa524c14ce1b3d4d6!2sVia%20Vigilio%20Inama%2C%208%2C%2038122%20Trento%20TN!5e0!3m2!1sit!2sit!4v1643649564360!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+    </div>
+    <div class="vertical-menu">
+        <div id="utente">
+            <h1>Mario Rossi</h1>
+            <a href="#">vedi profilo</a>
+        </div>
+        <div class="links">
+            <a href="#" class="active">Cerca parcheggio</a>
+            <a href="#" class="active">Wallet</a>
+            <a href="#" class="active">Prenotazioni</a>
+            <a href="#" class="active">Possiedi un parcheggio?</a>
+            <a href="#" class="active">Contattaci</a>
+            <a href="#" class="active">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

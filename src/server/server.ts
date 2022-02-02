@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
-import utentiSchema from "./schema/utentiSchema";
+import utentiSchema from "./schemas/utentiSchema";
+import parcheggiSchema from "./schemas/parcheggiSchema";
+import analytics from "./schemas/analyticsSchema";
 const app = express().use(cors(), express.json());
 
 //esempio
@@ -22,6 +24,7 @@ app.post("/test", async (req, res) => {
         return res.send(user.email);
     }
     //passo uno status, devo sempre ritornare lo status in un API
+    //const parcheggio = await (parcheggiSchema.findOne({undefined)) as any;
 })
 
 export default app

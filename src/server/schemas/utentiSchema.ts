@@ -1,4 +1,3 @@
-import { List } from "@mui/material";
 import mongoose, {Schema} from "mongoose";
 
 const utentiSchema = new Schema({
@@ -38,12 +37,12 @@ const utentiSchema = new Schema({
         default: 0
     },
     metodiPagamento:{
-        type: List, //numero di carta
+        type: Array, //numero di carta
         required: true,
         default: null
     },
     targhe:{
-        type: List,
+        type: Array,
         required: true,
         default: null
     },

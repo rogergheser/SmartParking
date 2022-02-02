@@ -37,12 +37,12 @@ const utentiSchema = new Schema({
         default: 0
     },
     metodiPagamento:{
-        type: Array, //numero di carta
+        type: [String], //numero di carta
         required: true,
         default: null
     },
     targhe:{
-        type: Array,
+        type: [String],
         required: true,
         default: null
     },
@@ -55,6 +55,15 @@ const utentiSchema = new Schema({
         type: Number,
         required: true,
         default: 0.0
+    },
+    CF: {
+        type: String,
+        required: true,
+        length: 16
+    },
+    birthDate: {
+        type: Date,
+        required: true
     }
 
 });

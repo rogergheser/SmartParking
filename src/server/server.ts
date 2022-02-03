@@ -6,54 +6,165 @@ import analytics from "./schemas/analyticsSchema";
 import { Mongoose } from "mongoose";
 const app = express().use(cors(), express.json());
 
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'SmartParking API',
+            version: '1.0.0',
+            description:
+                'Information about SmartParking API',
+            license: {
+                name: 'Licensed Under MIT',
+                url: 'https://spdx.org/licenses/MIT.html',
+            },
+            contact: {
+                name: '218078',
+                url: 'http://localhost:5001/',
+            },
+        },
+        servers: [
+            {
+                url: 'http://localhost:5001/',
+                description: 'Development server',
+            },
+        ],
+    },
+    apis: ["server.ts"]
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 //esempio
 /**
  * This api... if there's an error returns ... otherwise ...
  */
-app.post("/test", async (req, res) => {
-    const {nome, cognome} = req.body;
-    console.log(req.body);
-    console.log(nome, cognome);
-    if (typeof nome != "string" || typeof cognome != "string"){
-        return res.status(400).send("Nome o cognome non specificato");
-    }
-    console.log(nome, cognome);
-    const user = await (utentiSchema.findOne({nome, cognome})) as {nome:string, cognome:string, email:string};
-    if (!user){
-        return res.status(500).send("Utente non trovato");
-    } else {
-        return res.send(user.email);
-    }
-    //passo uno status, devo sempre ritornare lo status in un API
-    //const parcheggio = await (parcheggiSchema.findOne({undefined)) as any;
-})
+// app.post("/test", async (req, res) => {
+//     const {nome, cognome} = req.body;
+//     console.log(req.body);
+//     console.log(nome, cognome);
+//     if (typeof nome != "string" || typeof cognome != "string"){
+//         return res.status(400).send("Nome o cognome non specificato");
+//     }
+//     console.log(nome, cognome);
+//     const user = await (utentiSchema.findOne({nome, cognome})) as {nome:string, cognome:string, email:string};
+//     if (!user){
+//         return res.status(500).send("Utente non trovato");
+//     } else {
+//         return res.send(user.email);
+//     }
+//     //passo uno status, devo sempre ritornare lo status in un API
+//     //const parcheggio = await (parcheggiSchema.findOne({undefined)) as any;
+// })
 
+
+
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Registra un utente al sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *                _id:
+ *                  type: ObjectId
+ *                  description: Id of the person.
+ *                  example: 51b2ae5bb48pb237244bf8a2
+ *                nome:
+ *                  type: string
+ *                  description: nome dell'utente.
+ *                  example: Amir.
+ *                cognome:
+ *                  type: string
+ *                  description: Cognome dell'utente.
+ *                  example: Gheser.
+ *                email: 
+ *                   type: string
+ *                   description: Email dell'utente.
+ *                   example: amir.gheser@studenti.unitn.it.
+ *                password:
+ *                   type: string
+ *                   description: Password dell'utente.
+ *                   example: password.
+ *                cellNum:
+ *                   type: string
+ *                   description: Numero di telefono dell'utente.
+ *                   example: 3515054592.
+ *                isParcheggiatore:
+ *                   type: boolean
+ *                   description: Indica se è un utente parcheggiatore.
+ *                   example: false.
+ *                loginCounter:
+ *                   type: integer
+ *                   description: Conta il numero di login.
+ *                   example: 0.
+ *                metodiPagamento:
+ *                   type: array
+ *                   items:
+ *                       type: string
+ *                   description: I metodi di pagamento dell'utente.
+ *                   example: [ 0000 0000 0000 0000 ].
+ *                targhe:
+ *                   type: array
+ *                       type: string
+ *                   description: Le targe dei veicoli dell'utente.
+ *                   example: AA000ZZ.
+ *                cartaPreferita:
+ *                   type: string
+ *                   description: La carta di credito preferita dall'utente.
+ *                   example: 0000 0000 0000 0000.
+ *                saldoWallet:
+ *                   type: double
+ *                   description: Il saldo disponibile sul wallet dell'utente.
+ *                   example: 12.16.
+ *                CF:
+ *                   type: string
+ *                   description: Il codice fiscale dell'utente.
+ *                   example: GHSMRA01L25L781H.
+ *                birthDate:
+ *                   type: date
+ *                   description: La data di nascita dell'utente
+ *                   example: 25/07/01.
+ *                   pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/.
+ *     responses:
+ *       200:
+ *         description: Aggiunto utente con successo
+ *       400:
+ *         description: Parametri dell'utente invalidi.
+*/
 app.post("/register", async(req, res) => {
     const {nome, cognome, email, password, isParcheggiatore, cellNum, birthDate, CF} = req.body;
     console.table({nome, cognome, email, password, isParcheggiatore, cellNum, birthDate, CF});
-    let date = (birthDate as string).split('/');
     
-    if (CF.size != 16){
+    if (CF.length != 16){
         return res.status(400).send({error: "Codice fiscale non corretto"});
     }
 
-    if (nome.size > 30){
+    if (nome.length > 30){
         return res.status(400).send({error: "Nome troppo lungo"});
     }
 
-    if (cognome.size > 30){
+    if (cognome.length > 30){
         return res.status(400).send({error: "Cognome troppo lungo"});
     }
 
-    if (password.size < 6){
+    if (password.length < 6){
         return res.status(400).send({error: "Password troppo breve"});
     }
 
-    if (cellNum.size != 10){
+    if (cellNum.length != 10){
         return res.status(400).send({error: "Numero di telefono non corretto"});
     }
 
-    if (birthDate != 8){
+    if (birthDate.length != 8){
         return res.status(400).send({error: "Data non valida"});
     }
 
@@ -74,11 +185,98 @@ app.post("/register", async(req, res) => {
             targhe: [],
             saldoWallet: 0.0,
             CF,
-            birthDate: new Date(Number.parseInt(date[0]), Number.parseInt(date[1]), Number.parseInt(date[2]))
+            birthDate
         }).save());  
 })
 
 
+/**
+ * @swagger
+ * /src/server/profilo/{CF}:
+ *   get:
+ *     summary: Recupera informazioni su un utente.
+ *     description: Recuperare i vari attributi di uno specifico utente.
+ *     parameters:
+ *       - in: path
+ *         name: CF
+ *         schema: 
+ *             type: string
+ *         required: true
+ *         description: codice fiscale dell'utente desiderato
+ *     responses:
+ *       201:
+ *         description: Utente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: ObjectId
+ *                         description: Id of the person.
+ *                         example: 51b2ae5bb48pb237244bf8a2
+ *                       nome:
+ *                         type: string
+ *                         description: nome dell'utente.
+ *                         example: Amir.
+ *                       cognome:
+ *                         type: string
+ *                         description: Cognome dell'utente.
+ *                         example: Gheser.
+ *                       email: 
+ *                          type: string
+ *                          description: Email dell'utente.
+ *                          example: amir.gheser@studenti.unitn.it.
+ *                       password:
+ *                          type: string
+ *                          description: Password dell'utente.
+ *                          example: password.
+ *                       cellNum:
+ *                          type: string
+ *                          description: Numero di telefono dell'utente.
+ *                          example: 3515054592.
+ *                       isParcheggiatore:
+ *                          type: boolean
+ *                          description: Indica se è un utente parcheggiatore.
+ *                          example: false.
+ *                       loginCounter:
+ *                          type: integer
+ *                          description: Conta il numero di login.
+ *                          example: 0.
+ *                       metodiPagamento:
+ *                          type: array
+ *                          items:
+ *                              type: string
+ *                          description: I metodi di pagamento dell'utente.
+ *                          example: [ 0000 0000 0000 0000 ].
+ *                       targhe:
+ *                          type: array
+ *                              type: string
+ *                          description: Le targe dei veicoli dell'utente.
+ *                          example: AA000ZZ.
+ *                       cartaPreferita:
+ *                          type: string
+ *                          description: La carta di credito preferita dall'utente.
+ *                          example: 0000 0000 0000 0000.
+ *                       saldoWallet:
+ *                          type: double
+ *                          description: Il saldo disponibile sul wallet dell'utente.
+ *                          example: 12.16.
+ *                       CF:
+ *                          type: string
+ *                          description: Il codice fiscale dell'utente.
+ *                          example: GHSMRA01L25L781H.
+ *                       birthDate:
+ *                          type: date
+ *                          description: La data di nascita dell'utente
+ *                          example: 25/07/01.
+ *                          pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/.
+ */
 app.get("/profilo/:CF", async(req, res) => {
     console.log((req.params));
     const CF = req.params.CF;
@@ -86,6 +284,32 @@ app.get("/profilo/:CF", async(req, res) => {
     if (user) return res.status(201).send(user);
     else return res.status(500).send({error:"User not found"});
 })
+
+/**
+ * @swagger
+ * /rimuoviUtente/{CF}/{password}:
+ *   delete:
+ *     summary: Elimina un utente.
+ *     description: Dato il codice fiscale e la password, si rimuove l'utente dal sistema.
+ *     parameters:
+ *       - in: path
+ *         name: CF
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: Codice Fiscale dell'utente da rimuovere
+ *       - in: path
+ *         name: password
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: Password dell'utente da rimuovere
+ *     responses:
+ *       201:
+ *         description: Utente rimosso
+ *       400:
+ *         description: Utente non trovato o password errata
+*/
 
 app.delete("/rimuoviUtente", async(req, res) => {
     const {CF, password} = req.body;

@@ -47,7 +47,7 @@ const utentiSchema = new Schema({
         default: null
     },
     cartaPreferita:{
-        type: Number,
+        type: String,
         required: false,
         default: null
     },
@@ -62,7 +62,7 @@ const utentiSchema = new Schema({
         length: 16
     },
     birthDate: {
-        type: Date,
+        type: String,
         required: true
     }
 

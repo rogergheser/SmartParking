@@ -17,9 +17,13 @@ const analyticsSchema = new Schema({
         maxLength: 30
     },
     citta: {
-        type: Number,
+        type: String,
         required: true,
         default: 0
+    },
+    parcheggio: {
+        type: Object,
+        required: true
     }
 });
 

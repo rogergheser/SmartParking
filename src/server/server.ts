@@ -32,35 +32,11 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ["server.ts"]
+    apis: ["src/server/server.ts"]
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-//esempio
-/**
- * This api... if there's an error returns ... otherwise ...
- */
-// app.post("/test", async (req, res) => {
-//     const {nome, cognome} = req.body;
-//     console.log(req.body);
-//     console.log(nome, cognome);
-//     if (typeof nome != "string" || typeof cognome != "string"){
-//         return res.status(400).send("Nome o cognome non specificato");
-//     }
-//     console.log(nome, cognome);
-//     const user = await (utentiSchema.findOne({nome, cognome})) as {nome:string, cognome:string, email:string};
-//     if (!user){
-//         return res.status(500).send("Utente non trovato");
-//     } else {
-//         return res.send(user.email);
-//     }
-//     //passo uno status, devo sempre ritornare lo status in un API
-//     //const parcheggio = await (parcheggiSchema.findOne({undefined)) as any;
-// })
-
-
 
 /**
  * @swagger
@@ -81,59 +57,60 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *                nome:
  *                  type: string
  *                  description: nome dell'utente.
- *                  example: Amir.
+ *                  example: "Amir"
  *                cognome:
  *                  type: string
  *                  description: Cognome dell'utente.
- *                  example: Gheser.
+ *                  example: "Gheser"
  *                email: 
  *                   type: string
  *                   description: Email dell'utente.
- *                   example: amir.gheser@studenti.unitn.it.
+ *                   example: "amir.gheser@studenti.unitn.it"
  *                password:
  *                   type: string
  *                   description: Password dell'utente.
- *                   example: password.
+ *                   example: "password"
  *                cellNum:
  *                   type: string
  *                   description: Numero di telefono dell'utente.
- *                   example: 3515054592.
+ *                   example: "3515054592"
  *                isParcheggiatore:
  *                   type: boolean
  *                   description: Indica se è un utente parcheggiatore.
- *                   example: false.
+ *                   example: false
  *                loginCounter:
  *                   type: integer
  *                   description: Conta il numero di login.
- *                   example: 0.
+ *                   example: 0
  *                metodiPagamento:
  *                   type: array
  *                   items:
  *                       type: string
  *                   description: I metodi di pagamento dell'utente.
- *                   example: [ 0000 0000 0000 0000 ].
+ *                   example: [ "0000 0000 0000 0000" ]
  *                targhe:
  *                   type: array
+ *                   items:
  *                       type: string
  *                   description: Le targe dei veicoli dell'utente.
- *                   example: AA000ZZ.
+ *                   example: "AA000ZZ"
  *                cartaPreferita:
  *                   type: string
  *                   description: La carta di credito preferita dall'utente.
- *                   example: 0000 0000 0000 0000.
+ *                   example: "0000 0000 0000 0000"
  *                saldoWallet:
  *                   type: double
  *                   description: Il saldo disponibile sul wallet dell'utente.
- *                   example: 12.16.
+ *                   example: 12.16
  *                CF:
  *                   type: string
  *                   description: Il codice fiscale dell'utente.
- *                   example: GHSMRA01L25L781H.
+ *                   example: GHSMRA01L25L781H
  *                birthDate:
  *                   type: date
  *                   description: La data di nascita dell'utente
- *                   example: 25/07/01.
- *                   pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/.
+ *                   example: 25/07/01
+ *                   pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/
  *     responses:
  *       200:
  *         description: Aggiunto utente con successo
@@ -186,13 +163,13 @@ app.post("/register", async(req, res) => {
             saldoWallet: 0.0,
             CF,
             birthDate
-        }).save());  
+        }).save());
 })
 
 
 /**
  * @swagger
- * /src/server/profilo/{CF}:
+ * /profilo/{CF}:
  *   get:
  *     summary: Recupera informazioni su un utente.
  *     description: Recuperare i vari attributi di uno specifico utente.
@@ -223,59 +200,60 @@ app.post("/register", async(req, res) => {
  *                       nome:
  *                         type: string
  *                         description: nome dell'utente.
- *                         example: Amir.
+ *                         example: "Amir"
  *                       cognome:
  *                         type: string
  *                         description: Cognome dell'utente.
- *                         example: Gheser.
+ *                         example: "Gheser"
  *                       email: 
  *                          type: string
  *                          description: Email dell'utente.
- *                          example: amir.gheser@studenti.unitn.it.
+ *                          example: amir.gheser@studenti.unitn.it
  *                       password:
  *                          type: string
  *                          description: Password dell'utente.
- *                          example: password.
+ *                          example: "password"
  *                       cellNum:
  *                          type: string
  *                          description: Numero di telefono dell'utente.
- *                          example: 3515054592.
+ *                          example: 3515054592
  *                       isParcheggiatore:
  *                          type: boolean
  *                          description: Indica se è un utente parcheggiatore.
- *                          example: false.
+ *                          example: false
  *                       loginCounter:
  *                          type: integer
  *                          description: Conta il numero di login.
- *                          example: 0.
+ *                          example: 0
  *                       metodiPagamento:
  *                          type: array
  *                          items:
  *                              type: string
  *                          description: I metodi di pagamento dell'utente.
- *                          example: [ 0000 0000 0000 0000 ].
+ *                          example: [ "0000 0000 0000 0000" ]
  *                       targhe:
  *                          type: array
+ *                          items:
  *                              type: string
  *                          description: Le targe dei veicoli dell'utente.
- *                          example: AA000ZZ.
+ *                          example: "AA000ZZ"
  *                       cartaPreferita:
  *                          type: string
  *                          description: La carta di credito preferita dall'utente.
- *                          example: 0000 0000 0000 0000.
+ *                          example: "0000 0000 0000 0000"
  *                       saldoWallet:
  *                          type: double
  *                          description: Il saldo disponibile sul wallet dell'utente.
- *                          example: 12.16.
+ *                          example: 12.16
  *                       CF:
  *                          type: string
  *                          description: Il codice fiscale dell'utente.
- *                          example: GHSMRA01L25L781H.
+ *                          example: "GHSMRA01L25L781H"
  *                       birthDate:
  *                          type: date
  *                          description: La data di nascita dell'utente
- *                          example: 25/07/01.
- *                          pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/.
+ *                          example: 25/07/01
+ *                          pattern: /([0-9]{2})/(?:[0-9]{2})/([0-9]{4})/
  */
 app.get("/profilo/:CF", async(req, res) => {
     console.log((req.params));

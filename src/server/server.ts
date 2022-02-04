@@ -259,6 +259,7 @@ app.get("/profilo/:CF", async(req, res) => {
     console.log((req.params));
     const CF = req.params.CF;
     const user = await utentiSchema.findOne({CF});
+    console.table(user);
     if (user) return res.status(201).send(user);
     else return res.status(500).send({error:"User not found"});
 })
